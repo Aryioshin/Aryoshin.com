@@ -1,42 +1,300 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aryoshin NFT</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
-    <nav>
-        <a href="index.html">ARYOSHIN</a>
-        <a href="nft.html">NFT</a>
-        <a href="blog.html">BLOG</a>
-        <a href="link.html">LINK</a>
-    </nav>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="canonical" href="https://www.aryoshin.com/nft">
+        <meta property="og:title" content="Aryoshin NFT">
+        <meta property="og:url" content="https://www.aryoshin.com/nft">
+        <meta name="description" property="og:description" content="Aryoshin NFT Collection">
+        <title>ARYoshin NFT</title>
+        
+        <!-- Favicon e icone touch -->
+        <link href="images/touch-icon-iphone.png" rel="apple-touch-icon" sizes="60x60" />
+        <link href="images/touch-icon-ipad.png" rel="apple-touch-icon" sizes="76x76" />
+        <link href="images/touch-icon-iphone-retina.png" rel="apple-touch-icon" sizes="120x120" />
+        <link href="images/touch-icon-ipad-retina.png" rel="apple-touch-icon" sizes="152x152" />
+        <link href="images/favicon.png" rel="shortcut icon" />
+        <link href="images/favicon.png" rel="icon" />
+        
+        <!-- Meta tags per social -->
+        <meta property="og:image" content="images/ary-battle-arena-high.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:image" content="images/ary-battle-arena-high.png">
+        
+        <!-- Font e CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700,400italic,700italic|Dosis:400,700,400italic,700italic&display=swap">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        
+        <!-- CSS aggiuntivo per garantire la responsività -->
+        <style>
+            @media (max-width: 768px) {
+                .nft-card-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .nft-card {
+                    width: 90% !important;
+                    margin-bottom: 20px !important;
+                }
+                .nft-benefits-list {
+                    padding-left: 10px !important;
+                }
+            }
+            
+            .nft-card-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                margin: 30px 0;
+            }
+            
+            .nft-card {
+                width: 250px;
+                padding: 15px;
+                border: 1px solid #eee;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            
+            .nft-benefits-list {
+                list-style: none;
+                padding: 0;
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: left;
+            }
+            
+            .nft-benefit-item {
+                margin-bottom: 10px;
+                padding-left: 25px;
+                position: relative;
+            }
+            
+            .nft-benefit-icon {
+                position: absolute;
+                left: 0;
+                top: 2px;
+            }
+        </style>
+    </head>
+    <body id="top" class="jw-is-no-slideshow jw-header-is-text jw-is-segment-page jw-is-frontend jw-is-no-sidebar jw-is-no-messagebar jw-is-no-touch-device jw-is-no-mobile">
+        <div class="jw-background"></div>
+        <div class="jw-body">
+            <div class="jw-mobile-menu jw-mobile-is-text js-mobile-menu">
+                <span class="jw-mobile-menu__button jw-mobile-menu__button--dummy"></span>
+                <div class="jw-mobile-header jw-mobile-header--text">
+                    <span class="jw-mobile-header-content">
+                        <div class="jw-mobile-text">
+                            aryoshin with knife
+                        </div>
+                    </span>
+                </div>
+                <button type="button" class="jw-mobile-menu__button jw-mobile-toggle" aria-label="Pulsante Menu">
+                    <span class="jw-icon-burger"></span>
+                </button>
+            </div>
+            
+            <header class="header-wrap js-topbar-content-container">
+                <div class="header">
+                    <div class="jw-header-logo">
+                        <div class="jw-header jw-header-title-container jw-header-text jw-header-text-toggle" data-stylable="true">
+                            <h1 id="jw-header-title" class="jw-header-title">
+                                aryoshin with knife
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <nav class="menu jw-menu-copy">
+                    <ul id="jw-menu" class="jw-menu jw-menu-horizontal">
+                        <li class="jw-menu-item">
+                            <a class="jw-menu-link" href="/index.html">
+                                <span class="">ARYOSHIN</span>
+                            </a>
+                        </li>
+                        <li class="jw-menu-item jw-menu-is-active">
+                            <a class="jw-menu-link js-active-menu-item" href="/nft.html">
+                                <span class="">NFT</span>
+                            </a>
+                        </li>
+                        <li class="jw-menu-item">
+                            <a class="jw-menu-link" href="/blog.html">
+                                <span class="">BLOG</span>
+                            </a>
+                        </li>
+                        <li class="jw-menu-item">
+                            <a class="jw-menu-link" href="/link.html">
+                                <span class="">LINK</span>
+                            </a>
+                        </li>
+                    </ul>
 
-    <div class="container">
-        <h1>aryoshin with knife</h1>
-        <img src="images/image-high.png" alt="ARYoshin Banner" width="100%">
-        <audio controls>
-            <source src="media/theme-song.mp3" type="audio/mpeg">
-            Il tuo browser non supporta l'elemento audio.
-        </audio>
-        <p>Launched in May 2024 as a Cronos-based memecoin, this project was built on the strong foundation of community support and the founder's vision to collaborate with those who embraced it passionately. Together, they turned this vision into reality.</p>
-    </div>
-
-    <div class="container">
-        <h1>ZKARY NFT</h1>
-        <img src="images/banner.gif" alt="ZKARY NFT Banner" width="100%">
-        <a href="https://app.ebisusbay.com/drops/ary" class="button">DROP</a>
-        <h2>NEW DROP ACTIVE</h2>
-        <h2>ARYZEN NFT</h2>
-        <img src="images/aryzen-collection-banner.png" alt="ARYZEN Collection" width="100%">
-        <iframe src="https://app.ebisusbay.com/drops/aryzen" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
-        <a href="https://app.ebisusbay.com/drops/aryzen" class="button">DROP</a>
-    </div>
-
-    <footer>
-        <p>© 2024 Aryoshin | <a href="mailto:aryoshin.cronos@gmail.com">Contattaci</a></p>
-    </footer>
-</body>
+                    <script id="jw-mobile-menu-template" type="text/template">
+                        <ul id="jw-menu" class="jw-menu jw-menu-horizontal">
+                            <li class="jw-menu-item">
+                                <a class="jw-menu-link" href="/index.html">
+                                    <span class="">ARYOSHIN</span>
+                                </a>
+                            </li>
+                            <li class="jw-menu-item jw-menu-is-active">
+                                <a class="jw-menu-link js-active-menu-item" href="/nft.html">
+                                    <span class="">NFT</span>
+                                </a>
+                            </li>
+                            <li class="jw-menu-item">
+                                <a class="jw-menu-link" href="/blog.html">
+                                    <span class="">BLOG</span>
+                                </a>
+                            </li>
+                            <li class="jw-menu-item">
+                                <a class="jw-menu-link" href="/link.html">
+                                    <span class="">LINK</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </script>
+                </nav>
+            </header>
+            
+            <div class="main-content">
+                <main class="block-content">
+                    <div data-section-name="content" class="jw-section jw-section-content jw-responsive">
+                        <div class="jw-tree-node jw-element jw-strip-root jw-tree-container">
+                            <div class="jw-tree-node jw-element jw-strip jw-tree-container jw-strip--default jw-strip--style-color jw-strip--color-default jw-strip--padding-both jw-node-is-first-child jw-strip--primary jw-node-is-last-child">
+                                <div class="jw-strip__content-container">
+                                    <div class="jw-strip__content jw-responsive">
+                                        <div class="jw-tree-node jw-element jw-image jw-node-is-first-child">
+                                            <div class="jw-intent jw-element-image jw-element-child jw-element-content jw-element-activeless jw-element-no-margin jw-element-image-is-center jw-element-image--full-width-to-640" style="width: 100%; max-width: 1066px;">
+                                                <picture class="jw-element-image__image-wrapper jw-image-is-square jw-intrinsic" style="padding-top: 33.864915572233%;">
+                                                    <img class="jw-element-image__image jw-intrinsic__item" width="1066" height="361" alt="ARYoshin NFT Banner" src="images/image-high.png" loading="lazy" />
+                                                </picture>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="jw-tree-node jw-element jw-audio">
+                                            <div class="jw-element-audio jw-element-audio--align-center">
+                                                <audio preload="none" controls>
+                                                    <source src="media/theme-song.mp3" type="audio/mpeg" />
+                                                </audio>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="jw-tree-node jw-element jw-image-text jw-node-is-last-child">
+                                            <div class="jw-element-imagetext-text">
+                                                <h2 style="text-align: center;" class="jw-heading-100">ARYoshin NFT Collection: Exclusive digital collectibles for our community. Each NFT represents a unique piece of ARYoshin's universe with special utilities and benefits for holders. Stay tuned for upcoming releases and collaborations.</h2>
+                                                
+                                                <!-- NFT Content -->
+                                                <div style="margin-top: 40px; text-align: center;">
+                                                    <h3 style="font-size: 24px; margin-bottom: 20px;">Coming Soon - First NFT Collection</h3>
+                                                    <p style="margin-bottom: 30px;">Our first NFT collection is in development and will be launched soon. Join our community to be the first to know about the drop date.</p>
+                                                    
+                                                    <div class="nft-card-container">
+                                                        <div class="nft-card">
+                                                            <h4>ARYoshin OG NFT</h4>
+                                                            <p style="font-size: 14px;">Limited supply of 100 OG NFTs with exclusive benefits for early supporters.</p>
+                                                        </div>
+                                                        
+                                                        <div class="nft-card">
+                                                            <h4>ARYoshin Battle Pass</h4>
+                                                            <p style="font-size: 14px;">Access exclusive content and future airdrops with our Battle Pass NFT.</p>
+                                                        </div>
+                                                        
+                                                        <div class="nft-card">
+                                                            <h4>ARYoshin Mystery Box</h4>
+                                                            <p style="font-size: 14px;">Special edition NFTs with randomized traits and varying rarity levels.</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <h3 style="font-size: 22px; margin: 40px 0 20px;">NFT Benefits</h3>
+                                                    <ul class="nft-benefits-list">
+                                                        <li class="nft-benefit-item">
+                                                            <span class="nft-benefit-icon">✦</span> 
+                                                            Early access to new project features
+                                                        </li>
+                                                        <li class="nft-benefit-item">
+                                                            <span class="nft-benefit-icon">✦</span> 
+                                                            Community governance voting rights
+                                                        </li>
+                                                        <li class="nft-benefit-item">
+                                                            <span class="nft-benefit-icon">✦</span> 
+                                                            Exclusive Discord channels
+                                                        </li>
+                                                        <li class="nft-benefit-item">
+                                                            <span class="nft-benefit-icon">✦</span> 
+                                                            Special token airdrops
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            
+            <footer class="block-footer">
+                <div data-section-name="footer" class="jw-section jw-section-footer jw-responsive">
+                    <div class="jw-strip jw-strip--default jw-strip--style-color jw-strip--primary jw-strip--color-default jw-strip--padding-both">
+                        <div class="jw-strip__content-container">
+                            <div class="jw-strip__content jw-responsive">
+                                <!-- Rating Stars -->
+                                <div class="jw-tree-node jw-element jw-rating">
+                                    <div style="text-align: left" class="jw-element-rating-content jw-element-rating--color-yellow jw-element-rating--size-32 jw-element-rating--voting-enabled">
+                                        <div class="sr-only">
+                                            Valutazione: 5 stelle
+                                        </div>
+                                        <div class="jw-element-rating__stars">
+                                            <label title="1 stella" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">1 stella</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="2 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">2 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="3 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">3 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="4 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">4 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="5 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">5 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Email contact -->
+                                <div class="jw-tree-node jw-element jw-image-text jw-node-is-last-child">
+                                    <div class="jw-element-imagetext-text">
+                                        <p><a href="mailto:aryoshin.cronos@gmail.com">aryoshin.cronos@gmail.com</a></p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Copyright -->
+                                <div class="jw-credits clear">
+                                    <div class="jw-credits-owner">
+                                        <div id="jw-footer-text">
+                                            <div class="jw-footer-text-content">
+                                                &copy; 2024 Aryoshin
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
 </html>
