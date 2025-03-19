@@ -209,5 +209,66 @@
                 </div>
             </footer>
         </div>
+        <audio id="background-music" loop src="/images/media/theme-song.mp3"></audio>
+
+<!-- Icona Play -->
+<div id="audio-control" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%) rotate(-15deg); cursor: pointer; z-index: 100;">
+  <img id="audio-icon" src="/images/play-icon.png" alt="Play" width="64" height="64" style="filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); transition: transform 0.2s ease;">
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('background-music');
+    const audioControl = document.getElementById('audio-control');
+    const audioIcon = document.getElementById('audio-icon');
+    let isPlaying = false;
+
+    // Controlla se l'audio è stato caricato
+    audio.addEventListener('loadeddata', function() {
+      console.log('Audio caricato correttamente');
+    });
+
+    // Gestisce errori di caricamento dell'audio
+    audio.addEventListener('error', function(error) {
+      console.error('Errore caricamento audio:', error);
+    });
+
+    // Funzione per attivare/disattivare l'audio
+    function toggleAudio() {
+      if (audio.paused) {
+        // Tenta di riprodurre l'audio
+        audio.volume = 0.3; // Volume al 30%
+        audio.play()
+          .then(function() {
+            isPlaying = true;
+            audioIcon.src = "/images/pause-icon.png";
+            console.log('Audio avviato con successo');
+          })
+          .catch(function(err) {
+            console.error('Errore nella riproduzione:', err);
+            // Molti browser richiedono un'interazione utente per riprodurre audio
+            alert('Per ascoltare la musica di sottofondo, clicca di nuovo sull\'icona play');
+          });
+      } else {
+        audio.pause();
+        isPlaying = false;
+        audioIcon.src = "/images/play-icon.png";
+        console.log('Audio in pausa');
+      }
+    }
+
+    // Aggiunge evento click all'icona
+    audioControl.addEventListener('click', toggleAudio);
+
+    // Effetto hover sull'icona
+    audioIcon.addEventListener('mouseover', function() {
+      this.style.transform = 'scale(1.1)';
+    });
+
+    audioIcon.addEventListener('mouseout', function() {
+      this.style.transform = 'scale(1)';
+    });
+  });
+</script>
     </body>
 </html>
