@@ -26,6 +26,79 @@
         <!-- Font e CSS -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700,400italic,700italic|Dosis:400,700,400italic,700italic&display=swap">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        
+        <!-- CSS aggiuntivo per garantire la responsività -->
+        <style>
+            @media (max-width: 768px) {
+                .blog-post {
+                    padding: 0 10px 30px 10px;
+                }
+                
+                .cta-newsletter {
+                    padding: 20px 10px !important;
+                }
+                
+                .cta-newsletter input, 
+                .cta-newsletter button {
+                    width: 90% !important;
+                }
+            }
+            
+            .blog-post {
+                margin-bottom: 60px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 40px;
+            }
+            
+            .blog-post:last-child {
+                border-bottom: none;
+            }
+            
+            .blog-post-title {
+                font-size: 26px;
+                margin-bottom: 10px;
+            }
+            
+            .blog-post-meta {
+                font-size: 14px;
+                color: #777;
+                margin-bottom: 20px;
+            }
+            
+            .blog-post-content {
+                margin-bottom: 20px;
+            }
+            
+            .cta-newsletter {
+                text-align: center;
+                margin-top: 50px;
+                padding: 30px;
+                background-color: #f8f8f8;
+                border-radius: 10px;
+            }
+            
+            .newsletter-form {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .newsletter-input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            
+            .newsletter-button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body id="top" class="jw-is-no-slideshow jw-header-is-text jw-is-segment-page jw-is-frontend jw-is-no-sidebar jw-is-no-messagebar jw-is-no-touch-device jw-is-no-mobile">
         <div class="jw-background"></div>
@@ -67,7 +140,7 @@
                             </a>
                         </li>
                         <li class="jw-menu-item jw-menu-is-active">
-                            <a class="jw-menu-link js-active-menu-item" href="/blog.html"">
+                            <a class="jw-menu-link js-active-menu-item" href="/blog.html">
                                 <span class="">BLOG</span>
                             </a>
                         </li>
@@ -91,7 +164,7 @@
                                 </a>
                             </li>
                             <li class="jw-menu-item jw-menu-is-active">
-                                <a class="jw-menu-link js-active-menu-item" href="/blog.html"">
+                                <a class="jw-menu-link js-active-menu-item" href="/blog.html">
                                     <span class="">BLOG</span>
                                 </a>
                             </li>
@@ -113,7 +186,7 @@
                                 <div class="jw-strip__content-container">
                                     <div class="jw-strip__content jw-responsive">
                                         <div class="jw-tree-node jw-element jw-image jw-node-is-first-child">
-                                            <div class="jw-intent jw-element-image jw-element-child jw-element-content jw-element-activeless jw-element-no-margin jw-element-image-is-center jw-element-image--full-width-to-640" style="width: 1066px;">
+                                            <div class="jw-intent jw-element-image jw-element-child jw-element-content jw-element-activeless jw-element-no-margin jw-element-image-is-center jw-element-image--full-width-to-640" style="width: 100%; max-width: 1066px;">
                                                 <picture class="jw-element-image__image-wrapper jw-image-is-square jw-intrinsic" style="padding-top: 33.864915572233%;">
                                                     <img class="jw-element-image__image jw-intrinsic__item" width="1066" height="361" alt="ARYoshin Blog Banner" src="images/image-high.png" loading="lazy" />
                                                 </picture>
@@ -138,63 +211,121 @@
                                         <div class="jw-tree-node jw-element jw-image-text jw-node-is-last-child">
                                             <div class="jw-element-imagetext-text" style="margin-top: 40px;">
                                                 <!-- Blog Post 1 -->
-                                                <article style="margin-bottom: 60px; border-bottom: 1px solid #eee; padding-bottom: 40px;">
-                                                    <h3 style="font-size: 26px; margin-bottom: 10px;">ARYoshin Launch Announcement</h3>
-                                                    <p style="font-size: 14px; color: #777; margin-bottom: 20px;">May 15, 2024 | Project Updates</p>
+                                                <article class="blog-post">
+                                                    <h3 class="blog-post-title">ARYoshin Launch Announcement</h3>
+                                                    <p class="blog-post-meta">May 15, 2024 | Project Updates</p>
                                                     
-                                                    <p style="margin-bottom: 20px;">We're excited to announce the official launch of ARYoshin! After months of planning and development, our project is now live on the Cronos blockchain. This marks an important milestone for our team and community as we embark on this journey together.</p>
-                                                    
-                                                    <p style="margin-bottom: 20px;">The ARYoshin token ($ARY) is now available for trading, and we've implemented several features to ensure the project's long-term success and stability. Our community-driven approach means that every holder has a voice in the project's future.</p>
-                                                    
-                                                    <p style="margin-bottom: 20px;">Stay tuned for more updates as we roll out additional features and begin implementing our roadmap initiatives.</p>
+                                                    <div class="blog-post-content">
+                                                        <p>We're excited to announce the official launch of ARYoshin! After months of planning and development, our project is now live on the Cronos blockchain. This marks an important milestone for our team and community as we embark on this journey together.</p>
+                                                        
+                                                        <p>The ARYoshin token ($ARY) is now available for trading, and we've implemented several features to ensure the project's long-term success and stability. Our community-driven approach means that every holder has a voice in the project's future.</p>
+                                                        
+                                                        <p>Stay tuned for more updates as we roll out additional features and begin implementing our roadmap initiatives.</p>
+                                                    </div>
                                                 </article>
                                                 
                                                 <!-- Blog Post 2 -->
-                                                <article style="margin-bottom: 60px; border-bottom: 1px solid #eee; padding-bottom: 40px;">
-                                                    <h3 style="font-size: 26px; margin-bottom: 10px;">Community Growth and Development Plans</h3>
-                                                    <p style="font-size: 14px; color: #777; margin-bottom: 20px;">May 25, 2024 | Community</p>
+                                                <article class="blog-post">
+                                                    <h3 class="blog-post-title">Community Growth and Development Plans</h3>
+                                                    <p class="blog-post-meta">May 25, 2024 | Community</p>
                                                     
-                                                    <p style="margin-bottom: 20px;">In just ten days since our launch, the ARYoshin community has grown tremendously! We've welcomed hundreds of new members to our community channels, and the engagement levels have been phenomenal.</p>
-                                                    
-                                                    <p style="margin-bottom: 20px;">As we continue to grow, we're focusing on building a strong foundation for the project. Here are some key initiatives we're working on:</p>
-                                                    
-                                                    <ul style="margin-bottom: 20px; padding-left: 20px;">
-                                                        <li style="margin-bottom: 10px;">Expanding our development team to accelerate our roadmap</li>
-                                                        <li style="margin-bottom: 10px;">Implementing community feedback mechanisms</li>
-                                                        <li style="margin-bottom: 10px;">Planning our first community events and competitions</li>
-                                                        <li style="margin-bottom: 10px;">Securing strategic partnerships to enhance the ARYoshin ecosystem</li>
-                                                    </ul>
-                                                    
-                                                    <p>We value every member of our community and appreciate your continued support. Together, we'll build something truly special!</p>
+                                                    <div class="blog-post-content">
+                                                        <p>In just ten days since our launch, the ARYoshin community has grown tremendously! We've welcomed hundreds of new members to our community channels, and the engagement levels have been phenomenal.</p>
+                                                        
+                                                        <p>As we continue to grow, we're focusing on building a strong foundation for the project. Here are some key initiatives we're working on:</p>
+                                                        
+                                                        <ul style="margin-bottom: 20px; padding-left: 20px;">
+                                                            <li style="margin-bottom: 10px;">Expanding our development team to accelerate our roadmap</li>
+                                                            <li style="margin-bottom: 10px;">Implementing community feedback mechanisms</li>
+                                                            <li style="margin-bottom: 10px;">Planning our first community events and competitions</li>
+                                                            <li style="margin-bottom: 10px;">Securing strategic partnerships to enhance the ARYoshin ecosystem</li>
+                                                        </ul>
+                                                        
+                                                        <p>We value every member of our community and appreciate your continued support. Together, we'll build something truly special!</p>
+                                                    </div>
                                                 </article>
                                                 
                                                 <!-- Blog Post 3 -->
-                                                <article>
-                                                    <h3 style="font-size: 26px; margin-bottom: 10px;">Upcoming NFT Collection Preview</h3>
-                                                    <p style="font-size: 14px; color: #777; margin-bottom: 20px;">June 2, 2024 | NFT</p>
+                                                <article class="blog-post">
+                                                    <h3 class="blog-post-title">Upcoming NFT Collection Preview</h3>
+                                                    <p class="blog-post-meta">June 2, 2024 | NFT</p>
                                                     
-                                                    <p style="margin-bottom: 20px;">We're thrilled to give you a sneak peek at our upcoming NFT collection! Our talented artists have been working tirelessly to create unique digital collectibles that capture the essence of ARYoshin.</p>
-                                                    
-                                                    <p style="margin-bottom: 20px;">The first collection will feature a limited series of 100 unique ARYoshin character designs, each with varying rarities and special attributes. These NFTs won't just be beautiful digital art – they'll provide actual utility within our ecosystem.</p>
-                                                    
-                                                    <p style="margin-bottom: 20px;">NFT holders will enjoy:</p>
-                                                    
-                                                    <ul style="margin-bottom: 20px; padding-left: 20px;">
-                                                        <li style="margin-bottom: 10px;">Access to exclusive community channels</li>
-                                                        <li style="margin-bottom: 10px;">Early participation in future token sales</li>
-                                                        <li style="margin-bottom: 10px;">Voting rights on certain community decisions</li>
-                                                        <li style="margin-bottom: 10px;">Special rewards and airdrops</li>
-                                                    </ul>
-                                                    
-                                                    <p>Mark your calendars – the minting will begin on June 15, 2024. More details will be shared in our community channels as we get closer to the launch date. Stay tuned!</p>
+                                                    <div class="blog-post-content">
+                                                        <p>We're thrilled to give you a sneak peek at our upcoming NFT collection! Our talented artists have been working tirelessly to create unique digital collectibles that capture the essence of ARYoshin.</p>
+                                                        
+                                                        <p>The first collection will feature a limited series of 100 unique ARYoshin character designs, each with varying rarities and special attributes. These NFTs won't just be beautiful digital art – they'll provide actual utility within our ecosystem.</p>
+                                                        
+                                                        <p>NFT holders will enjoy:</p>
+                                                        
+                                                        <ul style="margin-bottom: 20px; padding-left: 20px;">
+                                                            <li style="margin-bottom: 10px;">Access to exclusive community channels</li>
+                                                            <li style="margin-bottom: 10px;">Early participation in future token sales</li>
+                                                            <li style="margin-bottom: 10px;">Voting rights on certain community decisions</li>
+                                                            <li style="margin-bottom: 10px;">Special rewards and airdrops</li>
+                                                        </ul>
+                                                        
+                                                        <p>Mark your calendars – the minting will begin on June 15, 2024. More details will be shared in our community channels as we get closer to the launch date. Stay tuned!</p>
+                                                    </div>
                                                 </article>
                                                 
                                                 <!-- Call to Action -->
-                                                <div style="text-align: center; margin-top: 50px; padding: 30px; background-color: #f8f8f8; border-radius: 10px;">
+                                                <div class="cta-newsletter">
                                                     <h3 style="font-size: 24px; margin-bottom: 15px;">Subscribe to Our Newsletter</h3>
                                                     <p style="margin-bottom: 20px;">Get the latest ARYoshin updates directly to your inbox.</p>
-                                                    <form style="max-width: 400px; margin: 0 auto;" action="#" method="post">
-                                                        <input type="email" placeholder="Your email address" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                                                        <button type="submit" style="background-color: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                                                    <form class="newsletter-form" action="#" method="post">
+                                                        <input type="email" class="newsletter-input" placeholder="Your email address">
+                                                        <button type="submit" class="newsletter-button">Subscribe</button>
                                                     </form>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            
+            <footer class="block-footer">
+                <div data-section-name="footer" class="jw-section jw-section-footer jw-responsive">
+                    <div class="jw-strip jw-strip--default jw-strip--style-color jw-strip--primary jw-strip--color-default jw-strip--padding-both">
+                        <div class="jw-strip__content-container">
+                            <div class="jw-strip__content jw-responsive">
+                                <!-- Rating Stars -->
+                                <div class="jw-tree-node jw-element jw-rating">
+                                    <div style="text-align: left" class="jw-element-rating-content jw-element-rating--color-yellow jw-element-rating--size-32 jw-element-rating--voting-enabled">
+                                        <div class="sr-only">
+                                            Valutazione: 5 stelle
+                                        </div>
+                                        <div class="jw-element-rating__stars">
+                                            <label title="1 stella" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">1 stella</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="2 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">2 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="3 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">3 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="4 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">4 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                            <label title="5 stelle" class="jw-element-rating__star jw-element-rating__star--full">
+                                                <span class="sr-only">5 stelle</span>
+                                                <i class="website-rendering-icon-star jw-element-rating__icon-full"></i>
+                                            </label>
+                                        </div>
+                                    </div>
