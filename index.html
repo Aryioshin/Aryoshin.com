@@ -59,25 +59,50 @@
         
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.getElementById('background-music');
+            // Cerca l'elemento audio con più selettori possibili
+            let audio = document.getElementById('background-music');
+            if (!audio) {
+                audio = document.querySelector('audio'); // Prova a prendere qualsiasi elemento audio
+            }
+            
             const audioControl = document.getElementById('audio-control');
             const audioIcon = document.getElementById('audio-icon');
             let isPlaying = false;
             
-            // Imposta volume basso
+            // Debug per verificare se l'audio è stato trovato
+            console.log('Elemento audio trovato:', audio ? 'Sì' : 'No');
+            
+            // Imposta il percorso corretto per l'icona
+            // Determina se siamo in una sottocartella
+            const isInSubfolder = window.location.pathname.includes('/pages/');
+            const basePath = isInSubfolder ? '../' : '';
+            
+            // Imposta le sorgenti corrette
+            audioIcon.src = basePath + 'images/play-icon.png';
+            
+            // Imposta volume basso se l'audio esiste
             if (audio) {
                 audio.volume = 0.3;
+                console.log('Volume audio impostato');
+            } else {
+                console.error('Elemento audio non trovato!');
             }
             
             // Funzione per attivare/disattivare l'audio
             function toggleAudio() {
-                if (!audio) return;
+                if (!audio) {
+                    console.error('Elemento audio non trovato nel toggle');
+                    return;
+                }
+                
+                console.log('Stato audio attuale:', audio.paused ? 'In pausa' : 'In riproduzione');
                 
                 if (audio.paused) {
                     audio.play()
                         .then(function() {
                             isPlaying = true;
-                            audioIcon.src = "images/pause-icon.png";
+                            audioIcon.src = basePath + 'images/pause-icon.png';
+                            console.log('Audio avviato con successo');
                         })
                         .catch(function(err) {
                             console.error('Errore nella riproduzione:', err);
@@ -85,12 +110,17 @@
                 } else {
                     audio.pause();
                     isPlaying = false;
-                    audioIcon.src = "images/play-icon.png";
+                    audioIcon.src = basePath + 'images/play-icon.png';
+                    console.log('Audio messo in pausa');
                 }
             }
             
             // Aggiunge evento click all'icona
-            audioControl.addEventListener('click', toggleAudio);
+            audioControl.addEventListener('click', function(e) {
+                console.log('Click sull\'icona audio');
+                toggleAudio();
+                e.preventDefault(); // Previene comportamenti indesiderati
+            });
             
             // Effetto hover sull'icona
             audioIcon.addEventListener('mouseover', function() {
