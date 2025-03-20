@@ -31,32 +31,33 @@
         <style>
             #audio-control {
                 position: fixed;
-                bottom: 20px;          
-                right: 20px;           
+                bottom: 20px;          /* In basso invece che in alto */
+                right: 20px;           /* Angolo destro */
                 cursor: pointer;
-                z-index: 9999;         
-                border-radius: 50%;    
-                padding: 8px;          
-                width: 50px;          
-                height: 50px;          
-                display: flex;         
+                z-index: 9999;         /* Valore molto alto */
+                border-radius: 50%;    /* Forma circolare */
+                padding: 8px;          /* Spaziatura interna */
+                width: 50px;           /* Larghezza fissa */
+                height: 50px;          /* Altezza fissa */
+                display: flex;         /* Per centrare l'icona */
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Ombra per risaltare */
             }
             
             #audio-icon {
                 width: 30px;
                 height: 30px;
-                filter: invert(1);     
+                filter: invert(1);     /* Rende l'icona bianca */
                 display: block;
             }
             
+            /* Stile per dispositivi mobili */
             @media (max-width: 768px) {
                 #audio-control {
-                    bottom: 20px;      
+                    bottom: 20px;      /* Mantiene la stessa posizione */
                     right: 20px;
-                    width: 60px;       
+                    width: 60px;       /* Leggermente più grande su mobile */
                     height: 60px;
                 }
                 #audio-icon {
@@ -66,74 +67,15 @@
             }
         </style>
         
-        <!-- Icona Audio HTML pura senza immagine -->
-        <div id="audio-control">
-            <!-- Utilizziamo HTML per creare un'icona invece di un'immagine -->
-            <svg id="audio-icon" viewBox="0 0 24 24" width="30" height="30" fill="white">
-                <!-- Path per l'icona play -->
-                <path id="play-icon" d="M8 5v14l11-7z" />
-                <!-- Path per l'icona pause (inizialmente nascosta) -->
-                <path id="pause-icon" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" style="display:none" />
-            </svg>
+        <!-- Elemento per debug - temporaneo -->
+        <div style="position: fixed; top: 0; left: 0; background-color: red; color: white; padding: 5px; z-index: 9999; font-size: 12px;">
+            Debug Mobile
         </div>
         
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.getElementById('background-music');
-            const audioControl = document.getElementById('audio-control');
-            const playIcon = document.getElementById('play-icon');
-            const pauseIcon = document.getElementById('pause-icon');
-            let isPlaying = false;
-            
-            // Correggiamo il percorso audio
-            if (audio) {
-              // Cerca di determinare il percorso corretto
-              if (window.location.pathname.includes('/pages/')) {
-                audio.src = "../media/theme-song.mp3";  // Se siamo in una sottocartella
-              } else {
-                audio.src = "media/theme-song.mp3";     // Se siamo nella root
-              }
-              audio.volume = 0.3;
-            }
-        
-            // Funzione per attivare/disattivare l'audio
-            function toggleAudio() {
-              if (!audio) {
-                console.error('Elemento audio non trovato');
-                return;
-              }
-              
-              if (audio.paused) {
-                audio.play()
-                  .then(function() {
-                    isPlaying = true;
-                    playIcon.style.display = "none";
-                    pauseIcon.style.display = "block";
-                  })
-                  .catch(function(err) {
-                    console.error('Errore nella riproduzione:', err);
-                  });
-              } else {
-                audio.pause();
-                isPlaying = false;
-                playIcon.style.display = "block";
-                pauseIcon.style.display = "none";
-              }
-            }
-        
-            // Aggiunge evento click all'icona
-            audioControl.addEventListener('click', toggleAudio);
-        
-            // Effetto hover
-            audioControl.addEventListener('mouseover', function() {
-              this.style.transform = 'scale(1.1)';
-            });
-        
-            audioControl.addEventListener('mouseout', function() {
-              this.style.transform = 'scale(1)';
-            });
-          });
-        </script>
+        <!-- Icona Play -->
+        <div id="audio-control">
+            <img id="audio-icon" src="../images/play-icon.png" alt="Play">
+        </div>
         </div>
         
         <!-- Icona Play -->
