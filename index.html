@@ -29,55 +29,32 @@
         
         <!-- CSS aggiuntivo per garantire la responsività -->
         <style>
-            /* Stile base per il controllo audio */
             #audio-control {
                 position: fixed;
+                top: 30px;
+                right: 500px;
                 cursor: pointer;
-                z-index: 9999;
-                background-color: rgba(0,0,0,0.7);
-                border-radius: 50%;
-                padding: 8px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                box-shadow: 0 0 10px rgba(0,0,0,0.5);
-                transition: transform 0.2s ease;
+                z-index: 1000;
             }
             
             #audio-icon {
-                color: white;
-                text-align: center;
-                font-size: 24px;
+                width: 40px;
+                height: 40px;
+                transition: transform 0.2s ease;
             }
             
-            /* Stile per desktop (tua posizione preferita) */
-            @media (min-width: 769px) {
-                #audio-control {
-                    top: 30px;
-                    right: 500px;
-                    width: 40px;
-                    height: 40px;
-                }
-            }
-            
-            /* Stile per dispositivi mobili (posizione suggerita) */
+            /* Stile per dispositivi mobili (manteniamo lo stesso posizionamento) */
             @media (max-width: 768px) {
                 #audio-control {
-                    bottom: 20px;
-                    right: 20px;
-                    width: 60px;
-                    height: 60px;
-                }
-                
-                #audio-icon {
-                    font-size: 30px;
+                    top: 30px;
+                    right: 20px; /* Più vicino al bordo su mobile */
                 }
             }
         </style>
         
         <!-- Icona Play -->
         <div id="audio-control">
-            <div id="audio-icon">▶</div>
+            <img id="audio-icon" src="images/play-icon.png" alt="Play">
         </div>
         
         <script>
@@ -87,23 +64,20 @@
             const audioIcon = document.getElementById('audio-icon');
             let isPlaying = false;
             
-            // Assicuriamoci che l'audio esista e impostiamo il volume
+            // Imposta volume basso
             if (audio) {
                 audio.volume = 0.3;
             }
             
             // Funzione per attivare/disattivare l'audio
             function toggleAudio() {
-                if (!audio) {
-                    console.error('Elemento audio non trovato');
-                    return;
-                }
+                if (!audio) return;
                 
                 if (audio.paused) {
                     audio.play()
                         .then(function() {
                             isPlaying = true;
-                            audioIcon.innerHTML = "⏸"; // Icona pausa Unicode
+                            audioIcon.src = "images/pause-icon.png";
                         })
                         .catch(function(err) {
                             console.error('Errore nella riproduzione:', err);
@@ -111,26 +85,21 @@
                 } else {
                     audio.pause();
                     isPlaying = false;
-                    audioIcon.innerHTML = "▶"; // Icona play Unicode
+                    audioIcon.src = "images/play-icon.png";
                 }
             }
             
             // Aggiunge evento click all'icona
             audioControl.addEventListener('click', toggleAudio);
             
-            // Effetto hover
-            audioControl.addEventListener('mouseover', function() {
+            // Effetto hover sull'icona
+            audioIcon.addEventListener('mouseover', function() {
                 this.style.transform = 'scale(1.1)';
             });
             
-            audioControl.addEventListener('mouseout', function() {
+            audioIcon.addEventListener('mouseout', function() {
                 this.style.transform = 'scale(1)';
             });
-            
-            // Se l'audio si sta già riproducendo, mostra l'icona corretta
-            if (audio && !audio.paused) {
-                audioIcon.innerHTML = "⏸";
-            }
         });
         </script>
     </head>
