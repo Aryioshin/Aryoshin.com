@@ -29,36 +29,54 @@
         
         <!-- CSS aggiuntivo per garantire la responsività -->
         <style>
-            /* Stile di base per desktop */
             #audio-control {
                 position: fixed;
-                top: 30px;
-                right: 500px;
+                bottom: 20px;          /* In basso invece che in alto */
+                right: 20px;           /* Angolo destro */
                 cursor: pointer;
-                z-index: 1000;
+                z-index: 9999;         /* Valore molto alto */
+                background-color: rgba(0,0,0,0.7); /* Sfondo scuro semi-trasparente */
+                border-radius: 50%;    /* Forma circolare */
+                padding: 8px;          /* Spaziatura interna */
+                width: 50px;           /* Larghezza fissa */
+                height: 50px;          /* Altezza fissa */
+                display: flex;         /* Per centrare l'icona */
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Ombra per risaltare */
+            }
+            
+            #audio-icon {
+                width: 30px;
+                height: 30px;
+                filter: invert(1);     /* Rende l'icona bianca */
+                display: block;
             }
             
             /* Stile per dispositivi mobili */
             @media (max-width: 768px) {
                 #audio-control {
-                    top: 10px;  /* Posizione più alta su mobile */
-                    right: 15px;
-                    z-index: 1500; /* Z-index più alto per superare altri elementi */
+                    bottom: 20px;      /* Mantiene la stessa posizione */
+                    right: 20px;
+                    width: 60px;       /* Leggermente più grande su mobile */
+                    height: 60px;
                 }
                 #audio-icon {
-                    width: 48px; /* Icona più grande su mobile per facilitare il tocco */
-                    height: 48px;
-                }
-            }
-            
-            /* Stile per dispositivi molto piccoli */
-            @media (max-width: 480px) {
-                #audio-control {
-                    top: 60px;
-                    right: 10px;
+                    width: 35px;
+                    height: 35px;
                 }
             }
         </style>
+        
+        <!-- Elemento per debug - temporaneo -->
+        <div style="position: fixed; top: 0; left: 0; background-color: red; color: white; padding: 5px; z-index: 9999; font-size: 12px;">
+            Debug Mobile
+        </div>
+        
+        <!-- Icona Play -->
+        <div id="audio-control">
+            <img id="audio-icon" src="../images/play-icon.png" alt="Play">
+        </div>
     </head>
     <body id="top" class="jw-is-no-slideshow jw-header-is-text jw-is-segment-page jw-is-frontend jw-is-no-sidebar jw-is-no-messagebar jw-is-no-touch-device jw-is-no-mobile">
         <div class="jw-background"></div>
