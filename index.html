@@ -35,6 +35,9 @@
                 right: 500px;
                 cursor: pointer;
                 z-index: 1000;
+                background-color: rgba(0,0,0,0.7);
+                border-radius: 50%;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
             }
             
             #audio-icon {
@@ -43,14 +46,20 @@
                 transition: transform 0.2s ease;
             }
             
-            /* Stile per dispositivi mobili (manteniamo lo stesso posizionamento) */
             @media (max-width: 768px) {
                 #audio-control {
                     top: 30px;
-                    right: 20px; /* Più vicino al bordo su mobile */
+                    right: 20px;
                 }
             }
         </style>
+        
+        <!-- Assicuriamoci che l'audio sia definito correttamente -->
+        <audio id="audio-player" preload="auto" loop>
+            <source src="media/theme-song.mp3" type="audio/mpeg">
+            <!-- Fallback per sicurezza -->
+            <source src="images/media/theme-song.mp3" type="audio/mpeg">
+        </audio>
         
         <!-- Icona Play -->
         <div id="audio-control">
@@ -59,76 +68,76 @@
         
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Cerca l'elemento audio con più selettori possibili
-            let audio = document.getElementById('background-music');
-            if (!audio) {
-                audio = document.querySelector('audio'); // Prova a prendere qualsiasi elemento audio
-            }
+            // Riferimenti agli elementi
+            const player = document.getElementById('audio-player');
+            const control = document.getElementById('audio-control');
+            const icon = document.getElementById('audio-icon');
             
-            const audioControl = document.getElementById('audio-control');
-            const audioIcon = document.getElementById('audio-icon');
-            let isPlaying = false;
-            
-            // Debug per verificare se l'audio è stato trovato
-            console.log('Elemento audio trovato:', audio ? 'Sì' : 'No');
-            
-            // Imposta il percorso corretto per l'icona
-            // Determina se siamo in una sottocartella
-            const isInSubfolder = window.location.pathname.includes('/pages/');
-            const basePath = isInSubfolder ? '../' : '';
-            
-            // Imposta le sorgenti corrette
-            audioIcon.src = basePath + 'images/play-icon.png';
-            
-            // Imposta volume basso se l'audio esiste
-            if (audio) {
-                audio.volume = 0.3;
-                console.log('Volume audio impostato');
-            } else {
+            // Verifica che il player sia stato trovato
+            if (!player) {
                 console.error('Elemento audio non trovato!');
+                return; // Esci dallo script se non c'è l'audio
             }
             
-            // Funzione per attivare/disattivare l'audio
-            function toggleAudio() {
-                if (!audio) {
-                    console.error('Elemento audio non trovato nel toggle');
-                    return;
-                }
+            // Imposta il volume
+            player.volume = 0.3;
+            
+            // Log di debug
+            console.log('Audio player inizializzato');
+            console.log('Stato iniziale:', player.paused ? 'In pausa' : 'In riproduzione');
+            
+            // Funzione semplificata per toggle play/pause
+            function togglePlay() {
+                console.log('Toggle audio richiesto');
                 
-                console.log('Stato audio attuale:', audio.paused ? 'In pausa' : 'In riproduzione');
-                
-                if (audio.paused) {
-                    audio.play()
-                        .then(function() {
-                            isPlaying = true;
-                            audioIcon.src = basePath + 'images/pause-icon.png';
-                            console.log('Audio avviato con successo');
-                        })
-                        .catch(function(err) {
-                            console.error('Errore nella riproduzione:', err);
-                        });
+                if (player.paused) {
+                    // Tenta di riprodurre l'audio
+                    const playPromise = player.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                console.log('Riproduzione avviata');
+                                // Cambia l'icona a pausa
+                                icon.src = 'images/pause-icon.png';
+                            })
+                            .catch(error => {
+                                console.error('Errore riproduzione:', error);
+                            });
+                    }
                 } else {
-                    audio.pause();
-                    isPlaying = false;
-                    audioIcon.src = basePath + 'images/play-icon.png';
-                    console.log('Audio messo in pausa');
+                    // Metti in pausa
+                    player.pause();
+                    console.log('Riproduzione in pausa');
+                    // Cambia l'icona a play
+                    icon.src = 'images/play-icon.png';
                 }
             }
             
-            // Aggiunge evento click all'icona
-            audioControl.addEventListener('click', function(e) {
-                console.log('Click sull\'icona audio');
-                toggleAudio();
-                e.preventDefault(); // Previene comportamenti indesiderati
-            });
+            // Aggiungi l'event listener per il click
+            control.addEventListener('click', togglePlay);
             
-            // Effetto hover sull'icona
-            audioIcon.addEventListener('mouseover', function() {
+            // Effetto hover
+            icon.addEventListener('mouseover', function() {
                 this.style.transform = 'scale(1.1)';
             });
             
-            audioIcon.addEventListener('mouseout', function() {
+            icon.addEventListener('mouseout', function() {
                 this.style.transform = 'scale(1)';
+            });
+            
+            // Gestisci anche gli eventi dell'audio per sicurezza
+            player.addEventListener('play', function() {
+                icon.src = 'images/pause-icon.png';
+            });
+            
+            player.addEventListener('pause', function() {
+                icon.src = 'images/play-icon.png';
+            });
+            
+            // Log di eventuali errori dell'audio
+            player.addEventListener('error', function(e) {
+                console.error('Errore audio:', player.error);
             });
         });
         </script>
