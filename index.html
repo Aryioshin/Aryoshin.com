@@ -31,33 +31,32 @@
         <style>
             #audio-control {
                 position: fixed;
-                bottom: 20px;          /* In basso invece che in alto */
-                right: 20px;           /* Angolo destro */
+                bottom: 20px;          
+                right: 20px;           
                 cursor: pointer;
-                z-index: 9999;         /* Valore molto alto */
-                border-radius: 50%;    /* Forma circolare */
-                padding: 8px;          /* Spaziatura interna */
-                width: 50px;           /* Larghezza fissa */
-                height: 50px;          /* Altezza fissa */
-                display: flex;         /* Per centrare l'icona */
+                z-index: 9999;         
+                border-radius: 50%;    
+                padding: 8px;          
+                width: 50px;          
+                height: 50px;          
+                display: flex;         
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Ombra per risaltare */
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
             }
             
             #audio-icon {
                 width: 30px;
                 height: 30px;
-                filter: invert(1);     /* Rende l'icona bianca */
+                filter: invert(1);     
                 display: block;
             }
             
-            /* Stile per dispositivi mobili */
             @media (max-width: 768px) {
                 #audio-control {
-                    bottom: 20px;      /* Mantiene la stessa posizione */
+                    bottom: 20px;      
                     right: 20px;
-                    width: 60px;       /* Leggermente più grande su mobile */
+                    width: 60px;       
                     height: 60px;
                 }
                 #audio-icon {
@@ -66,6 +65,65 @@
                 }
             }
         </style>
+        
+        <!-- Icona Play con gestione percorsi universali -->
+        <div id="audio-control">
+            <img id="audio-icon" src="images/play-icon.png" alt="Play">
+        </div>
+        
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('background-music');
+            const audioControl = document.getElementById('audio-control');
+            const audioIcon = document.getElementById('audio-icon');
+            let isPlaying = false;
+            
+            // Determina il percorso base in base all'URL corrente
+            const isInSubfolder = window.location.pathname.includes('/pages/');
+            const basePath = isInSubfolder ? '../' : '';
+            
+            // Imposta l'src iniziale corretto
+            audioIcon.src = basePath + "images/play-icon.png";
+            
+            // Verifica se l'audio esiste e imposta il percorso corretto
+            if (audio) {
+              audio.src = basePath + "images/media/theme-song.mp3";
+              audio.volume = 0.3;
+            }
+        
+            // Funzione per attivare/disattivare l'audio
+            function toggleAudio() {
+              if (!audio) return;
+              
+              if (audio.paused) {
+                audio.play()
+                  .then(function() {
+                    isPlaying = true;
+                    audioIcon.src = basePath + "images/pause-icon.png";
+                  })
+                  .catch(function(err) {
+                    console.error('Errore nella riproduzione:', err);
+                  });
+              } else {
+                audio.pause();
+                isPlaying = false;
+                audioIcon.src = basePath + "images/play-icon.png";
+              }
+            }
+        
+            // Aggiunge evento click all'icona
+            audioControl.addEventListener('click', toggleAudio);
+        
+            // Effetto hover sull'icona
+            audioIcon.addEventListener('mouseover', function() {
+              this.style.transform = 'scale(1.1)';
+            });
+        
+            audioIcon.addEventListener('mouseout', function() {
+              this.style.transform = 'scale(1)';
+            });
+          });
+        </script>
         </div>
         
         <!-- Icona Play -->
