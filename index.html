@@ -30,15 +30,27 @@
         <!-- CSS aggiuntivo per garantire la responsività -->
         <style>
             #audio-control {
-                position: fixed;
-                top: 30px;
-                right: 500px;
-                cursor: pointer;
-                z-index: 1000;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Ombra leggera e sottile */
-            }
-            
-            #audio-icon {
+    position: fixed;
+    top: 30px;
+    right: 500px;
+    cursor: pointer;
+    z-index: 1000;
+    /* Renderlo rotondo */
+    border-radius: 50%;
+    /* Ombra circolare */
+    box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.3);
+    /* Se l'elemento è un contenitore per l'immagine, specifico dimensioni esplicite */
+    width: 40px;
+    height: 40px;
+    /* Centra l'immagine all'interno */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Sfondo opzionale per garantire che l'ombra sia visibile */
+    background-color: transparent;
+}
+
+#audio-icon {
                 width: 40px;
                 height: 40px;
                 transition: transform 0.2s ease;
