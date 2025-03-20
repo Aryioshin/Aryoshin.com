@@ -35,6 +35,7 @@
                 right: 500px;
                 cursor: pointer;
                 z-index: 1000;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Ombra leggera e sottile */
             }
             
             #audio-icon {
@@ -51,11 +52,13 @@
             }
         </style>
         
-        <!-- Assicuriamoci che l'audio sia definito correttamente -->
+        <!-- Definiamo l'audio correttamente con percorsi alternativi -->
         <audio id="audio-player" preload="auto" loop>
+            <!-- Prova diversi percorsi possibili -->
             <source src="media/theme-song.mp3" type="audio/mpeg">
-            <!-- Fallback per sicurezza -->
             <source src="images/media/theme-song.mp3" type="audio/mpeg">
+            <source src="/media/theme-song.mp3" type="audio/mpeg">
+            <source src="/images/media/theme-song.mp3" type="audio/mpeg">
         </audio>
         
         <!-- Icona Play -->
@@ -73,40 +76,42 @@
             // Verifica che il player sia stato trovato
             if (!player) {
                 console.error('Elemento audio non trovato!');
-                return; // Esci dallo script se non c'è l'audio
+                return;
             }
             
-            // Imposta il volume
-            player.volume = 0.3;
+            // Imposta un volume più basso per evitare distorsioni
+            player.volume = 0.2;
             
             // Log di debug
             console.log('Audio player inizializzato');
-            console.log('Stato iniziale:', player.paused ? 'In pausa' : 'In riproduzione');
             
-            // Funzione semplificata per toggle play/pause
+            // Funzione per toggle play/pause
             function togglePlay() {
                 console.log('Toggle audio richiesto');
                 
                 if (player.paused) {
-                    // Tenta di riprodurre l'audio
-                    const playPromise = player.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise
-                            .then(() => {
-                                console.log('Riproduzione avviata');
-                                // Cambia l'icona a pausa
-                                icon.src = 'images/pause-icon.png';
-                            })
-                            .catch(error => {
-                                console.error('Errore riproduzione:', error);
-                            });
-                    }
+                    // Avvia la riproduzione con un breve delay per evitare problemi di buffer
+                    setTimeout(() => {
+                        const playPromise = player.play();
+                        
+                        if (playPromise !== undefined) {
+                            playPromise
+                                .then(() => {
+                                    console.log('Riproduzione avviata');
+                                    // Usa percorso relativo semplice per l'icona
+                                    icon.src = 'images/pause-icon.png';
+                                })
+                                .catch(error => {
+                                    console.error('Errore riproduzione:', error);
+                                    // Potrebbe essere necessaria interazione utente
+                                    alert('Per riprodurre l\'audio, clicca nuovamente sull\'icona');
+                                });
+                        }
+                    }, 100);
                 } else {
                     // Metti in pausa
                     player.pause();
                     console.log('Riproduzione in pausa');
-                    // Cambia l'icona a play
                     icon.src = 'images/play-icon.png';
                 }
             }
@@ -123,18 +128,29 @@
                 this.style.transform = 'scale(1)';
             });
             
-            // Gestisci anche gli eventi dell'audio per sicurezza
+            // Gestisci eventi audio
             player.addEventListener('play', function() {
+                console.log('Evento play rilevato');
                 icon.src = 'images/pause-icon.png';
             });
             
             player.addEventListener('pause', function() {
+                console.log('Evento pause rilevato');
                 icon.src = 'images/play-icon.png';
             });
             
-            // Log di eventuali errori dell'audio
+            // Gestisci errori di riproduzione
             player.addEventListener('error', function(e) {
                 console.error('Errore audio:', player.error);
+                // Prova a caricare manualmente l'audio con un altro metodo
+                if (!player.src) {
+                    player.src = 'media/theme-song.mp3';
+                }
+            });
+            
+            // Gestisci il caricamento
+            player.addEventListener('canplaythrough', function() {
+                console.log('Audio caricato completamente e pronto');
             });
         });
         </script>
