@@ -66,40 +66,49 @@
             }
         </style>
         
-        <!-- Icona Play con gestione percorsi universali -->
+        <!-- Icona Audio HTML pura senza immagine -->
         <div id="audio-control">
-            <img id="audio-icon" src="images/play-icon.png" alt="Play">
+            <!-- Utilizziamo HTML per creare un'icona invece di un'immagine -->
+            <svg id="audio-icon" viewBox="0 0 24 24" width="30" height="30" fill="white">
+                <!-- Path per l'icona play -->
+                <path id="play-icon" d="M8 5v14l11-7z" />
+                <!-- Path per l'icona pause (inizialmente nascosta) -->
+                <path id="pause-icon" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" style="display:none" />
+            </svg>
         </div>
         
         <script>
           document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('background-music');
             const audioControl = document.getElementById('audio-control');
-            const audioIcon = document.getElementById('audio-icon');
+            const playIcon = document.getElementById('play-icon');
+            const pauseIcon = document.getElementById('pause-icon');
             let isPlaying = false;
             
-            // Determina il percorso base in base all'URL corrente
-            const isInSubfolder = window.location.pathname.includes('/pages/');
-            const basePath = isInSubfolder ? '../' : '';
-            
-            // Imposta l'src iniziale corretto
-            audioIcon.src = basePath + "images/play-icon.png";
-            
-            // Verifica se l'audio esiste e imposta il percorso corretto
+            // Correggiamo il percorso audio
             if (audio) {
-              audio.src = basePath + "images/media/theme-song.mp3";
+              // Cerca di determinare il percorso corretto
+              if (window.location.pathname.includes('/pages/')) {
+                audio.src = "../media/theme-song.mp3";  // Se siamo in una sottocartella
+              } else {
+                audio.src = "media/theme-song.mp3";     // Se siamo nella root
+              }
               audio.volume = 0.3;
             }
         
             // Funzione per attivare/disattivare l'audio
             function toggleAudio() {
-              if (!audio) return;
+              if (!audio) {
+                console.error('Elemento audio non trovato');
+                return;
+              }
               
               if (audio.paused) {
                 audio.play()
                   .then(function() {
                     isPlaying = true;
-                    audioIcon.src = basePath + "images/pause-icon.png";
+                    playIcon.style.display = "none";
+                    pauseIcon.style.display = "block";
                   })
                   .catch(function(err) {
                     console.error('Errore nella riproduzione:', err);
@@ -107,19 +116,20 @@
               } else {
                 audio.pause();
                 isPlaying = false;
-                audioIcon.src = basePath + "images/play-icon.png";
+                playIcon.style.display = "block";
+                pauseIcon.style.display = "none";
               }
             }
         
             // Aggiunge evento click all'icona
             audioControl.addEventListener('click', toggleAudio);
         
-            // Effetto hover sull'icona
-            audioIcon.addEventListener('mouseover', function() {
+            // Effetto hover
+            audioControl.addEventListener('mouseover', function() {
               this.style.transform = 'scale(1.1)';
             });
         
-            audioIcon.addEventListener('mouseout', function() {
+            audioControl.addEventListener('mouseout', function() {
               this.style.transform = 'scale(1)';
             });
           });
