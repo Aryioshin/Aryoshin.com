@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Collezione NFT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2" id="collection-name">Caricamento collezione...</h1>
+            <p class="text-gray-600" id="collection-description">Recupero informazioni...</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-700 mb-2">NFT Totali</h2>
+                <p class="text-3xl font-bold text-blue-600" id="total-nfts">-</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-700 mb-2">In Vendita</h2>
+                <p class="text-3xl font-bold text-green-600" id="listed-nfts">-</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-700 mb-2">Prezzo Medio</h2>
+                <p class="text-3xl font-bold text-purple-600" id="avg-price">-</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-700 mb-2">Proprietari Unici</h2>
+                <p class="text-3xl font-bold text-orange-600" id="unique-owners">-</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Distribuzione Value Traits</h2>
+                <div class="h-64">
+                    <canvas id="value-distribution-chart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Attività Recente</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">NFT</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Prezzo</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Valore</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Quando</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-activity">
+                            <tr>
+                                <td colspan="4" class="px-4 py-2 text-center text-gray-500">Caricamento attività...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Top Holders per Valore Totale</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Posizione</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Wallet</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">NFT Posseduti</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Valore Totale</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top-holders">
+                        <tr>
+                            <td colspan="4" class="px-4 py-2 text-center text-gray-500">Caricamento top holders...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Form per verifica valore wallet -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Verifica Valore Wallet</h2>
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="text" id="wallet-input" placeholder="Inserisci indirizzo wallet" class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="check-wallet-btn" class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Verifica</button>
+            </div>
+            <div id="wallet-result" class="mt-4 p-4 hidden border rounded-md">
+                <!-- Risultati verifica wallet -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Indirizzo della collezione
+        const COLLECTION_ADDRESS = '0x582a5faf1f6eac517335e0654e2d97cc59388ee6';
+        const API_BASE_URL = 'https://api.ebisusbay.com';
+
+        // Dati di esempio per value traits (da sostituire con dati reali dall'API)
+        const valueTraits = [
+            { value: "1M", count: 250 },
+            { value: "100K", count: 500 },
+            { value: "50K", count: 750 },
+            { value: "10K", count: 1000 },
+            { value: "5K", count: 1000 },
+            { value: "1K", count: 1000 },
+            { value: "500", count: 500 }
+        ];
+
+        // Funzione per formattare numeri grandi
+        function formatNumber(num) {
+            return new Intl.NumberFormat().format(num);
+        }
+
+        // Funzione per formattare gli indirizzi wallet
+        function formatWalletAddress(address) {
+            if (!address) return '';
+            return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+        }
+
+        // Funzione per formattare le date
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString();
+        }
+
+        // Carica i dati della collezione
+        async function loadCollectionData() {
+            try {
+                // In un'implementazione reale, sostituire con chiamate effettive all'API
+                // Esempio:
+                // const response = await fetch(`${API_BASE_URL}/collections/${COLLECTION_ADDRESS}`);
+                // const collectionData = await response.json();
+                
+                // Per ora, usiamo dati di esempio
+                const collectionData = {
+                    name: "Crypto Collection Sample",
+                    description: "Una collezione di esempio per la Value Hunt Challenge",
+                    totalSupply: 5000,
+                    listedCount: 487,
+                    averagePrice: 243.5,
+                    uniqueOwners: 1256
+                };
+
+                // Aggiorna l'interfaccia con i dati della collezione
+                document.getElementById('collection-name').textContent = collectionData.name;
+                document.getElementById('collection-description').textContent = collectionData.description;
+                document.getElementById('total-nfts').textContent = formatNumber(collectionData.totalSupply);
+                document.getElementById('listed-nfts').textContent = formatNumber(collectionData.listedCount);
+                document.getElementById('avg-price').textContent = `${formatNumber(collectionData.averagePrice)} CRO`;
+                document.getElementById('unique-owners').textContent = formatNumber(collectionData.uniqueOwners);
+
+                // Carica il grafico di distribuzione dei value traits
+                loadValueDistributionChart();
+
+                // Carica l'attività recente
+                loadRecentActivity();
+
+                // Carica i top holders
+                loadTopHolders();
+            } catch (error) {
+                console.error('Errore nel caricamento dei dati della collezione:', error);
+                alert('Si è verificato un errore nel caricamento dei dati. Riprova più tardi.');
+            }
+        }
+
+        // Carica il grafico di distribuzione dei value traits
+        function loadValueDistributionChart() {
+            const ctx = document.getElementById('value-distribution-chart').getContext('2d');
+            
+            const labels = valueTraits.map(item => item.value);
+            const data = valueTraits.map(item => item.count);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Numero di NFT',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(255, 205, 86, 0.7)',
+                            'rgba(201, 203, 207, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Numero di NFT: ${formatNumber(context.raw)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Numero di NFT'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Valore'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Carica l'attività recente
+        function loadRecentActivity() {
+            // In un'implementazione reale, sostituire con chiamate effettive all'API
+            // Esempio:
+            // const response = await fetch(`${API_BASE_URL}/activity?collection=${COLLECTION_ADDRESS}&limit=5`);
+            // const activityData = await response.json();
+            
+            // Per ora, usiamo dati di esempio
+            const recentActivity = [
+                { id: "NFT #1234", price: 350, value: "100K", timestamp: Date.now() - 3600000 },
+                { id: "NFT #2567", price: 180, value: "50K", timestamp: Date.now() - 7200000 },
+                { id: "NFT #3890", price: 520, value: "1M", timestamp: Date.now() - 10800000 },
+                { id: "NFT #4123", price: 95, value: "10K", timestamp: Date.now() - 14400000 },
+                { id: "NFT #5456", price: 270, value: "100K", timestamp: Date.now() - 18000000 }
+            ];
+
+            const tableBody = document.getElementById('recent-activity');
+            tableBody.innerHTML = '';
+
+            recentActivity.forEach(activity => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-2 border-b border-gray-200">${activity.id}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${activity.price} CRO</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${activity.value}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${formatDate(activity.timestamp)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Carica i top holders
+        function loadTopHolders() {
+            // In un'implementazione reale, sostituire con chiamate effettive all'API
+            // Esempio:
+            // const response = await fetch(`${API_BASE_URL}/holders?collection=${COLLECTION_ADDRESS}&limit=10`);
+            // const holdersData = await response.json();
+            
+            // Per ora, usiamo dati di esempio
+            const topHolders = [
+                { wallet: "0x1a2b3c4d5e6f7g8h9i0j", nftCount: 28, totalValue: 15600000 },
+                { wallet: "0xa1b2c3d4e5f6g7h8i9j0", nftCount: 23, totalValue: 12800000 },
+                { wallet: "0x9i8h7g6f5e4d3c2b1a0", nftCount: 19, totalValue: 9700000 },
+                { wallet: "0x0j9i8h7g6f5e4d3c2b1a", nftCount: 17, totalValue: 8400000 },
+                { wallet: "0xz1x2c3v4b5n6m7l8k9j", nftCount: 15, totalValue: 6200000 }
+            ];
+
+            const tableBody = document.getElementById('top-holders');
+            tableBody.innerHTML = '';
+
+            topHolders.forEach((holder, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-2 border-b border-gray-200">${index + 1}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${formatWalletAddress(holder.wallet)}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${holder.nftCount}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${formatNumber(holder.totalValue)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Gestione verifica wallet
+        document.getElementById('check-wallet-btn').addEventListener('click', function() {
+            const walletAddress = document.getElementById('wallet-input').value.trim();
+            
+            if (!walletAddress) {
+                alert('Per favore, inserisci un indirizzo wallet valido.');
+                return;
+            }
+
+            // In un'implementazione reale, sostituire con chiamate effettive all'API
+            // Esempio:
+            // const response = await fetch(`${API_BASE_URL}/wallet-value?address=${walletAddress}&collection=${COLLECTION_ADDRESS}`);
+            // const walletData = await response.json();
+            
+            // Per ora, usiamo dati di esempio
+            const walletData = {
+                address: walletAddress,
+                nftCount: 12,
+                totalValue: 3500000,
+                rank: 8,
+                valueByTrait: [
+                    { value: "1M", count: 2 },
+                    { value: "100K", count: 5 },
+                    { value: "50K", count: 3 },
+                    { value: "10K", count: 2 }
+                ]
+            };
+
+            // Mostra i risultati
+            const resultDiv = document.getElementById('wallet-result');
+            resultDiv.innerHTML = `
+                <div class="text-lg font-semibold mb-2">Risultati per ${formatWalletAddress(walletData.address)}</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+                    <div>
+                        <span class="font-medium text-gray-600">NFT posseduti:</span>
+                        <span class="ml-2">${walletData.nftCount}</span>
+                    </div>
+                    <div>
+                        <span class="font-medium text-gray-600">Valore totale:</span>
+                        <span class="ml-2">${formatNumber(walletData.totalValue)}</span>
+                    </div>
+                    <div>
+                        <span class="font-medium text-gray-600">Posizione in classifica:</span>
+                        <span class="ml-2">#${walletData.rank}</span>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="font-medium text-gray-600 mb-1">Distribuzione per value:</div>
+                    <div class="flex flex-wrap gap-2">
+                        ${walletData.valueByTrait.map(trait => 
+                            `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-md">${trait.value} (${trait.count})</span>`
+                        ).join('')}
+                    </div>
+                </div>
+                ${walletData.totalValue >= 2000000 
+                    ? '<div class="mt-3 p-2 bg-green-100 text-green-800 rounded-md">✅ Qualificato per la Value Hunt Challenge!</div>' 
+                    : `<div class="mt-3 p-2 bg-yellow-100 text-yellow-800 rounded-md">⚠️ Mancano ${formatNumber(2000000 - walletData.totalValue)} value per qualificarsi.</div>`
+                }
+            `;
+            resultDiv.classList.remove('hidden');
+        });
+
+        // Carica i dati all'avvio
+        document.addEventListener('DOMContentLoaded', loadCollectionData);
+    </script>
+</body>
+</html>
