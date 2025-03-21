@@ -3,6 +3,6 @@
     { "src": "/nft", "dest": "/nft.html" },
     { "src": "/blog", "dest": "/blog.html" },
     { "src": "/link", "dest": "/link.html" },
-    { "src": "/nft-dashboard.html", "dest": "/nft-dashboard.html" }
+    { "src": "/nft-dashboard", "dest": "/nft-dashboard.html" }
   ]
 }
